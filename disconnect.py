@@ -1,10 +1,10 @@
 '''
 disconnect.py
 This script deletes every DM you have ever sent on discord
+Requirements:
 pip3 install requests
-
-python3 disconnect.py
-
+Usage:
+python3 ./disconnect.py
 '''
 import requests
 import time
