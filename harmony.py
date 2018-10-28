@@ -61,7 +61,7 @@ toBeDeleted =[]
 
 
 print("Searching for messages in all guild channels")
-toBeDeleted =[]
+
 for guild in guildList:
     offset = 0
     totalMessages = 99999999
