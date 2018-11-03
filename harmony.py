@@ -66,7 +66,7 @@ def random_poison(length):
 def poison_message(channe, msg_id, poison, token):
     url = 'https://discordapp.com/api/channels/' + channel + '/messages/' + msg_id
     headers = auth_headers(token)
-    data = '{"content":"%s"}' % poison or random_poison(20)
+    data = '{"content":"%s"}' % (poison or random_poison(20))
     r = requests.patch(url, headers = headers, data=data)
     if r.status_code == 204:
         print("Poisoned ", channel, " ", msg_id)
@@ -146,26 +146,26 @@ if __name__ == "__main__":
             time.sleep(.5)
 
     print(len(toBeDeleted), "messages found in total.")
-    method = lower(input("Proceed? (y)es / (n)o / (p)oison"))
-    switch (method) {
-        case('y'):
+    valid_input = False
+    while not valid_input:
+        user_input = lower(input("Proceed? (y)es / (n)o / (p)oison"))
+        if (user_input == 'y'):
+            valid_input = True
             print('Thanks for using Discord!')
             for [channel, msg_id] in toBeDeleted:
                 delete_message(channel, msg_id, token)
                 time.sleep(.25)
-            break;
-        case('n'):
+        elif (user_input == 'n'):
+            valid_input = True
             print('Oh, I see how it is. Thanks for using all that bandwidth before telling me that. Exiting.')
-            break;
-        case('p'):
-            print('Poison mode!\nYou can write a custom message to replace all your old ones, or leave this blank for random text.')
+        elif (user_input == 'p'):
+            valid_input = True
+            print('Poison mode!\nYou can write a custom message to replace all your old ones, or leave this blank for random text in each.')
             poison = input()
             if (poison == ''):
                 poison = None;
             for [channel, msg_id] in toBeDeleted:
                 poison_message(channel, msg_id, poison, token)
                 time.sleep(.25)
-            break;
-    }
 
         
