@@ -8,6 +8,8 @@ python3 ./harmony.py
 '''
 import requests
 import time
+import random
+import string
 
 def auth_headers(token):
     return {"Accept-Encoding": "gzip, deflate","Content-Type": "application/json","Authorization": token }
@@ -55,6 +57,19 @@ def delete_message(channel, msg_id, token):
     r = requests.delete(url, headers = headers)
     if r.status_code == 204:
         print("Deleted ", channel, " ", msg_id)
+
+def random_poison(length):
+   letters = string.ascii_lowercase
+   return ''.join(random.choice(letters) for i in range(length))
+
+
+def poison_message(channe, msg_id, poison, token):
+    url = 'https://discordapp.com/api/channels/' + channel + '/messages/' + msg_id
+    headers = auth_headers(token)
+    data = '{"content":"%s"}' % poison or random_poison(20)
+    r = requests.patch(url, headers = headers, data=data)
+    if r.status_code == 204:
+        print("Poisoned ", channel, " ", msg_id)
 
 
 if __name__ == "__main__":
@@ -130,8 +145,27 @@ if __name__ == "__main__":
                 scrape = False
             time.sleep(.5)
 
-    print("You are about to delete ", len(toBeDeleted), "messages.")
-    if input("Proceed? y/n") == 'y':
-        for [channel, msg_id] in toBeDeleted:
-            delete_message(channel, msg_id, token)
-            time.sleep(.25)
+    print(len(toBeDeleted), "messages found in total.")
+    method = lower(input("Proceed? (y)es / (n)o / (p)oison"))
+    switch (method) {
+        case('y'):
+            print('Thanks for using Discord!')
+            for [channel, msg_id] in toBeDeleted:
+                delete_message(channel, msg_id, token)
+                time.sleep(.25)
+            break;
+        case('n'):
+            print('Oh, I see how it is. Thanks for using all that bandwidth before telling me that. Exiting.')
+            break;
+        case('p'):
+            print('Poison mode!\nYou can write a custom message to replace all your old ones, or leave this blank for random text.')
+            poison = input()
+            if (poison == ''):
+                poison = None;
+            for [channel, msg_id] in toBeDeleted:
+                poison_message(channel, msg_id, poison, token)
+                time.sleep(.25)
+            break;
+    }
+
+        
