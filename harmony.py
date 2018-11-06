@@ -102,6 +102,7 @@ if __name__ == "__main__":
         totalMessages = 99999999
         while offset <= totalMessages:
             url = 'https://discordapp.com/api/guilds/' + guild + '/messages/search?author_id=' + my_id + '&offset=' + str(offset)
+            headers = auth_headers(token)
             r = requests.get(url, headers = headers)
             objB = r.json()
             totalMessages = objB['total_results']
@@ -118,6 +119,7 @@ if __name__ == "__main__":
     for channel in channelList:
         messageList = []
         url = 'https://discordapp.com/api/channels/' +channel+ '/messages'
+        headers = auth_headers(token)
         r = requests.get(url, headers = headers)
         objB = r.json()
         for message in objB:
@@ -133,6 +135,7 @@ if __name__ == "__main__":
             if len(messageList):
                 tempvalue = messageList[0]
                 url = 'https://discordapp.com/api/channels/' +channel+ '/messages?limit=100&before='+ messageList[0]
+                headers = auth_headers(token)
                 r = requests.get(url, headers = headers)
                 objC = r.json()
                 for message in objC:
