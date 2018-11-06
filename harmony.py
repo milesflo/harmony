@@ -59,8 +59,8 @@ def delete_message(channel, msg_id, token):
         print("Deleted ", channel, " ", msg_id)
 
 def random_poison(length):
-   letters = string.ascii_lowercase
-   return ''.join(random.choice(letters) for i in range(length))
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(length))
 
 
 def poison_message(channe, msg_id, poison, token):
@@ -81,6 +81,7 @@ if __name__ == "__main__":
 
     token = get_auth_token(email, password)
     print("Token: " ,token)
+    headers = auth_headers(token)
     time.sleep(1)
 
     my_id = get_user_id(token)
@@ -96,7 +97,6 @@ if __name__ == "__main__":
     toBeDeleted =[]
 
     print("Searching for messages in all guild channels")
-
     for guild in guildList:
         offset = 0
         totalMessages = 99999999
